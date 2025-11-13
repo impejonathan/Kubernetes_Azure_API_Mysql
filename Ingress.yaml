@@ -1,0 +1,73 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: api-ingress
+#   namespace: jimpe
+#   annotations:
+#     nginx.ingress.kubernetes.io/rewrite-target: /$2
+# spec:
+#   ingressClassName: nginx
+#   rules:
+#     - http:
+#         paths:
+#           - path: /jimpe(/|$)(.*)
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: api-service
+#                 port:
+#                   number: 8000
+
+
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: api-ingress
+#   namespace: jimpe
+# spec:
+#   #  APourGIC l'ingressClassName peut rester vide ou être celle définie pour AGIC sur ton cluster
+#   rules:
+#     - http:
+#         paths:
+#           - path: /jimpe/health
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: api-service
+#                 port:
+#                   number: 8000
+#           - path: /jimpe/clients
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: api-service
+#                 port:
+#                   number: 8000            
+#           - path: /jimpe/clients/
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: api-service
+#                 port:
+#                   number: 8000
+
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+  namespace: jimpe
+  annotations:
+    appgw.ingress.kubernetes.io/backend-protocol: "http"
+spec:
+  ingressClassName: azure-application-gateway
+  rules:
+    - http:
+        paths:
+          - path: /jimpe/*
+            pathType: Prefix
+            backend:
+              service:
+                name: api-service
+                port:
+                  number: 8000
