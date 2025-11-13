@@ -1,0 +1,66 @@
+Ouvre PowerShell ou VSCode EN TANT QU’ADMINISTRATEUR
+
+
+## **🚩 Étapes à suivre pour réparer Chocolatey**
+
+1. **Supprime le dossier vide pour repartir proprement :**  
+   ```powershell
+   Remove-Item -Recurse -Force 'C:\ProgramData\chocolatey'
+   ```
+   (Exécute ça en PowerShell admin !)
+
+2. **Relance ensuite l’installation officielle dans PowerShell admin :**
+   ```powershell
+   Set-ExecutionPolicy Bypass -Scope Process -Force; `
+   [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; `
+   iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+   ```
+
+3. **Une fois terminé, ferme puis rouvre PowerShell (admin), et teste :**
+   ```powershell
+   choco --version
+   ```
+
+---
+
+**Quand la commande plus haut te retourne bien un numéro de version, c’est terminé : tu pourras alors continuer avec les commandes :**
+```powershell
+choco install kubernetes-cli
+choco install minikube
+```
+
+---
+
+### **Récapitulatif rapide**
+1. Supprimer le dossier vide
+2. Relancer l’installation Chocolatey
+3. Vérifier `choco --version`
+4. Installer les outils nécessaires
+
+---
+
+**Dis-moi quand c’est OK ou si tu bloques sur une étape, je t’accompagne !**
+
+
+
+_____________________________
+1. Vérifie l'installation
+"kubectl version --client"
+"minikube version"
+__
+
+2. Démarre Minikube dans VS code 
+"minikube start --driver=docker"
+__
+3. Crée le namespace “jimpe”
+"kubectl create namespace jimpe"
+__
+4. Applique les fichiers YAML
+"kubectl apply -f secret-configmap.yaml"
+"kubectl apply -f mongodb.yaml"
+"kubectl apply -f mongo-express.yaml"
+
+
+
+ATTENTION
+les mots de passe admin + passs
